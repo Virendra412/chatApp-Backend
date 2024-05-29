@@ -125,8 +125,27 @@ const getNotification=asyncHandler(async (req, res) => {
   res.send(userNotification);
 })
 
+const updateUser = asyncHandler(async (req, res) => {
+  const {id, name, email, pic } = req.body;
 
-module.exports = { registerUser, authUser,allUser,getCurrentUser,addNotification,removeNotification,getNotification,addNotificationForOffline };
+ 
+
+  const user = await User.findByIdAndUpdate(id,{ name, email, pic },{new:true});
+  const token = await user.generateToken();
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      pic: user.pic,
+      token: token,
+    });
+  }
+})
+
+
+
+module.exports = { registerUser, authUser,allUser,getCurrentUser,updateUser,addNotification,removeNotification,getNotification,addNotificationForOffline };
 
 
 // const sampleUsers = ["uday", "rishi", "virendra", "rishabh", "aru", "rinku", "Nikki"]

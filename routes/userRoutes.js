@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerUser, authUser, allUser, getCurrentUser, addNotification, removeNotification, getNotification } = require('../controllers/userController');
+const { registerUser, authUser, allUser, getCurrentUser, addNotification, removeNotification, getNotification, updateUser } = require('../controllers/userController');
 const { protect } = require('../middleware/authMiddleware');
 const Router = express.Router();
 
@@ -7,6 +7,7 @@ const Router = express.Router();
 
 Router.post('/register', registerUser)
 Router.post('/login', authUser)
+Router.post('/update', updateUser)
 Router.get('/search', protect, allUser)
 Router.get('/getuser',protect,getCurrentUser)
 Router.post('/addNoti',protect,addNotification)
